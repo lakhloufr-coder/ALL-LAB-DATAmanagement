@@ -1,0 +1,433 @@
+mysql> source Part1.sql
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Database changed
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.08 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.12 sec)
+
+Query OK, 0 rows affected (0.10 sec)
+
+Query OK, 0 rows affected (0.13 sec)
+
+Query OK, 0 rows affected (0.08 sec)
+
+Query OK, 0 rows affected (0.09 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.09 sec)
+
+Query OK, 0 rows affected (0.08 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.08 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> source part2_.sql
+Database changed
+Query OK, 9 rows affected (0.01 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Query OK, 1 row affected (0.01 sec)
+
++-----+-----------+----------+-----------------------------+
+| pid | firstName | lastName | email                       |
++-----+-----------+----------+-----------------------------+
+|   1 | youssef   | alami    | youssef.alami@um6p.ma       |
+|   2 | salma     | bennani  | salma.bennani@um6p.ma       |
+|   9 | lina      | berrada  | lina.berrada@emines.um6p.ma |
+|   6 | nadia     | chraibi  | nadia.chraibi@um6p.ma       |
+|   7 | amine     | fassi    | amine.fassi@um6p.ma         |
+|   5 | rachid    | idrissi  | rachid.idrissi@um6p.ma      |
+|   4 | hind      | kabbaj   | hind.kabbaj@gmail.com       |
+|   8 | sara      | mansouri | sara.mansouri@um6p.ma       |
+|  10 | yassine   | ouali    | yassine.ouali@um6p.ma       |
+|   3 | omar      | tazi     | omar.tazi@um6p.ma           |
++-----+-----------+----------+-----------------------------+
+10 rows in set (0.00 sec)
+
++------------+
+| discipline |
++------------+
+| physics    |
+| chemistry  |
+| biology    |
++------------+
+3 rows in set (0.00 sec)
+
++-----+-----------+----------+------------------------+
+| pid | firstName | lastName | email                  |
++-----+-----------+----------+------------------------+
+|   1 | youssef   | alami    | youssef.alami@um6p.ma  |
+|   2 | salma     | bennani  | salma.bennani@um6p.ma  |
+|   3 | omar      | tazi     | omar.tazi@um6p.ma      |
+|   5 | rachid    | idrissi  | rachid.idrissi@um6p.ma |
+|   6 | nadia     | chraibi  | nadia.chraibi@um6p.ma  |
+|   7 | amine     | fassi    | amine.fassi@um6p.ma    |
+|   8 | sara      | mansouri | sara.mansouri@um6p.ma  |
+|  10 | yassine   | ouali    | yassine.ouali@um6p.ma  |
++-----+-----------+----------+------------------------+
+8 rows in set (0.00 sec)
+
++-----+-----------+----------+
+| pid | firstName | lastName |
++-----+-----------+----------+
+|   1 | youssef   | alami    |
+|   2 | salma     | bennani  |
+|   3 | omar      | tazi     |
+|   4 | hind      | kabbaj   |
+|   5 | rachid    | idrissi  |
+|   6 | nadia     | chraibi  |
+|   7 | amine     | fassi    |
+|   8 | sara      | mansouri |
+|  10 | yassine   | ouali    |
++-----+-----------+----------+
+9 rows in set (0.00 sec)
+
++-------+---------------------+---------------------+-----------+
+| resId | plannedStart        | plannedEnd          | status    |
++-------+---------------------+---------------------+-----------+
+|     1 | 2026-11-11 22:35:00 | 2026-11-12 22:35:00 | Approved  |
+|     2 | 2026-11-20 00:00:00 | 2026-11-22 00:00:00 | Cancelled |
+|     3 | 2026-11-25 00:00:00 | 2026-11-26 00:00:00 | Approved  |
+|     7 | 2026-11-18 00:00:00 | 2026-11-19 00:00:00 | Pending   |
++-------+---------------------+---------------------+-----------+
+4 rows in set (0.00 sec)
+
++---------------+------------------------------+--------+
+| fullName      | title                        | role   |
++---------------+------------------------------+--------+
+| youssef alami | gravity box simulation       | PI     |
+| amine fassi   | gravity box simulation       | Member |
+| salma bennani | water tank level experience  | PI     |
+| omar tazi     | water tank level experience  | Co-PI  |
+| salma bennani | plant growth simulation test | PI     |
+| sara mansouri | plant growth simulation test | Member |
+| omar tazi     | small robot line following   | PI     |
++---------------+------------------------------+--------+
+7 rows in set (0.00 sec)
+
++------------+---------------+---------------+
+| budgetLine | amountGranted | manager       |
++------------+---------------+---------------+
+| ll1        |      50000.00 | youssef alami |
+| ll2        |      30000.00 | omar tazi     |
+| ll3        |      20000.00 | omar tazi     |
++------------+---------------+---------------+
+3 rows in set (0.00 sec)
+
++-------+---------------+------------------------------+
+| resId | madeBy        | title                        |
++-------+---------------+------------------------------+
+|     1 | amine fassi   | gravity box simulation       |
+|     5 | amine fassi   | gravity box simulation       |
+|     6 | youssef alami | gravity box simulation       |
+|     7 | amine fassi   | gravity box simulation       |
+|     3 | omar tazi     | water tank level experience  |
+|     4 | omar tazi     | water tank level experience  |
+|     2 | sara mansouri | plant growth simulation test |
++-------+---------------+------------------------------+
+7 rows in set (0.00 sec)
+
++-------+----------+----------------+--------------------+
+| resId | serialNo | commercialName | name               |
++-------+----------+----------------+--------------------+
+|     1 | sn1      | microscope x1  | Physics Laboratory |
+|     1 | sn3      | microscope x2  | Physics Laboratory |
+|     2 | sn6      | microscope x2  | bio lab            |
+|     3 | sn5      | thermo t1      | chimie lab         |
+|     4 | sn4      | thermo t1      | Physics Laboratory |
+|     5 | sn1      | microscope x1  | Physics Laboratory |
+|     6 | sn4      | thermo t1      | Physics Laboratory |
+|     7 | sn3      | microscope x2  | Physics Laboratory |
+|     7 | sn7      | thermo t1      | chimie lab         |
++-------+----------+----------------+--------------------+
+9 rows in set (0.00 sec)
+
++-------+---------------------+---------------+
+| resId | plannedStart        | approver      |
++-------+---------------------+---------------+
+|     1 | 2026-11-11 22:35:00 | youssef alami |
+|     3 | 2026-11-25 00:00:00 | salma bennani |
++-------+---------------------+---------------+
+2 rows in set (0.00 sec)
+
++--------------------+-----------------+----------------+----------------+
+| labName            | consumableName  | quantityOnHand | monitoredBy    |
++--------------------+-----------------+----------------+----------------+
+| Physics Laboratory | alcohol         |           4.00 | rachid idrissi |
+| Physics Laboratory | gloves          |          35.00 | rachid idrissi |
+| chimie lab         | alcohol         |          25.00 | rachid idrissi |
+| bio lab            | gloves          |          12.00 | nadia chraibi  |
+| bio lab            | distilled water |          60.00 | nadia chraibi  |
++--------------------+-----------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
++--------------------+-------+
+| name               | units |
++--------------------+-------+
+| Physics Laboratory |     4 |
+| chimie lab         |     2 |
+| bio lab            |     1 |
+| optic lab          |     0 |
++--------------------+-------+
+4 rows in set (0.00 sec)
+
++-----------------+-----------+
+| name            | totalUsed |
++-----------------+-----------+
+| alcohol         |      4.00 |
+| gloves          |      5.00 |
+| distilled water |      0.00 |
+| salt            |      0.00 |
++-----------------+-----------+
+4 rows in set (0.00 sec)
+
++--------------------+-----+
+| name               | cnt |
++--------------------+-----+
+| Physics Laboratory |   4 |
++--------------------+-----+
+1 row in set (0.00 sec)
+
++------------------------------+--------------+
+| title                        | totalGranted |
++------------------------------+--------------+
+| gravity box simulation       |     50000.00 |
+| water tank level experience  |     50000.00 |
+| plant growth simulation test |     20000.00 |
+| small robot line following   |     50000.00 |
++------------------------------+--------------+
+4 rows in set (0.00 sec)
+
++--------------------+--------------------+-------+--------------+
+| name               | category           | units | avgCost      |
++--------------------+--------------------+-------+--------------+
+| Physics Laboratory | Optical Microscope |     3 | 15666.666667 |
+| Physics Laboratory | Thermometer        |     1 |   350.000000 |
+| chimie lab         | Thermometer        |     2 |   310.000000 |
+| bio lab            | Optical Microscope |     1 | 18000.000000 |
++--------------------+--------------------+-------+--------------+
+4 rows in set (0.00 sec)
+
++----------------+-------------+
+| name           | consumables |
++----------------+-------------+
+| supplier one   |           2 |
+| supplier two   |           2 |
+| supplier three |           2 |
++----------------+-------------+
+3 rows in set (0.00 sec)
+
++--------------------+-----------------+-------------+
+| labName            | consumableName  | lowestPrice |
++--------------------+-----------------+-------------+
+| Physics Laboratory | alcohol         |       11.00 |
+| Physics Laboratory | gloves          |        4.00 |
+| chimie lab         | alcohol         |       12.00 |
+| chimie lab         | distilled water |       30.00 |
+| bio lab            | gloves          |        3.80 |
+| bio lab            | salt            |        6.00 |
++--------------------+-----------------+-------------+
+6 rows in set (0.00 sec)
+
++-------+---------------+-----------+
+| resId | madeBy        | totalUsed |
++-------+---------------+-----------+
+|     1 | amine fassi   |      3.50 |
+|     3 | omar tazi     |      2.00 |
+|     6 | youssef alami |      3.50 |
++-------+---------------+-----------+
+3 rows in set (0.00 sec)
+
++-----+-----------+----------+
+| pid | firstName | lastName |
++-----+-----------+----------+
+|   1 | youssef   | alami    |
++-----+-----------+----------+
+1 row in set (0.00 sec)
+
++-----+-----------+----------+
+| pid | firstName | lastName |
++-----+-----------+----------+
+|   2 | salma     | bennani  |
+|   4 | hind      | kabbaj   |
+|   5 | rachid    | idrissi  |
+|   6 | nadia     | chraibi  |
+|   9 | lina      | berrada  |
+|  10 | yassine   | ouali    |
++-----+-----------+----------+
+6 rows in set (0.00 sec)
+
++----------+
+| serialNo |
++----------+
+| sn2      |
++----------+
+1 row in set (0.00 sec)
+
++----------+--------------+
+| serialNo | purchaseCost |
++----------+--------------+
+| sn3      |     20000.00 |
++----------+--------------+
+1 row in set (0.00 sec)
+
++---------+----------------+-----+---------------+
+| modelId | commercialName | pid | fullName      |
++---------+----------------+-----+---------------+
+|       1 | microscope x1  |   1 | youssef alami |
+|       1 | microscope x1  |   7 | amine fassi   |
+|       2 | microscope x2  |   1 | youssef alami |
+|       2 | microscope x2  |   7 | amine fassi   |
+|       2 | microscope x2  |   8 | sara mansouri |
++---------+----------------+-----+---------------+
+5 rows in set (0.00 sec)
+
+mysql> notee ;

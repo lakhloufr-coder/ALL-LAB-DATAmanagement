@@ -1,5 +1,20 @@
+# Ignore tout le dossier sqlfiles et son contenu
 sqlfiles/
-sqlfiles
 
+# Ignore le fichier PDF spécifique
 **/um6p-cc-cpi-m231-lab3.pdf
-.sqlfiles
+
+# Ignore tous les fichiers .sqlfiles (si c'est une extension)
+*.sqlfiles
+
+# Ignore les scripts SQL spécifiques dans TOUS les sous-dossiers (sans distinction de majuscules si configuré, ou écrivez les deux)
+**/part1_lab.sql
+**/Part1.sql
+**/part2.sql
+**/Part2.sql
+**/rlms.sql
+**/part2_lab.sql
+
+# Ignore un fichier précis dans le dossier LAB6
+**/LAB6/part1_lab.sql
+.gitignore 
