@@ -21,12 +21,26 @@ insert into Employee values
 (5,"0600000005","g02","technician",1),
 (6,"0600000006","f02","technician",2);
 
-insert into Student values (7,"phd"),(8,"master"),(9,"phd");
-insert into Academic values (1),(2),(3);
-insert into Faculty values (1),(2);
+insert into Student values (7,"phd")
+                         ,(8,"master")
+                         ,(9,"phd");
+
+insert into Academic values (1)
+						   ,(2)
+                           ,(3);
+
+insert into Faculty values (1)
+                          ,(2);
+
 insert into Administrative values (4);
-insert into Technical values (5),(6);
-insert into Advises values (1,7),(2,8),(3,9);
+
+insert into Technical values (5)
+                              ,(6);
+
+insert into Advises values (1,7)
+                           ,(2,8)
+                           ,(3,9);
+
 
 insert into Laboratory values
 (1,"Physics Laboratory","Riad5","r1","physics",1),
@@ -35,7 +49,13 @@ insert into Laboratory values
 (4,"optic lab","Riad5","r2","physics",1);
 
 
-insert into Attached values (1,1),(5,1),(3,2),(6,3),(7,1),(8,3),(2,4);
+insert into Attached values (1,1)
+							,(5,1)
+                            ,(3,2)
+                            ,(6,3)
+                            ,(7,1)
+                            ,(8,3)
+                            ,(2,4);
 
 insert into ResearchProject values
 ("p1","gravity box simulation","2026-01-01","2026-12-31","Active"),
@@ -56,8 +76,15 @@ insert into Budget values
 ("ll3",20000.00,0.00,"2026-03-01","2026-12-31",3);
 
 
-insert into FundsPrj values ("ll1","p1"),("ll2","p2"),("ll3","p2"),("ll3","p3"),("ll1","p4");
-insert into FundsLab values ("ll1",1),("ll1",4),("ll2",2),("ll3",3);
+insert into FundsPrj values ("ll1","p1")
+                             ,("ll2","p2")
+                             ,("ll3","p2"),
+                             ("ll3","p3"),
+                             ("ll1","p4");
+insert into FundsLab values ("ll1",1)
+                             ,("ll1",4)
+                             ,("ll2",2),
+                               ("ll3",3);
 
 insert into EquipmentModel values
 (1,"microscope x1","brand a","Optical Microscope","clean room",true),
@@ -78,7 +105,9 @@ insert into Certification values
 ("c2","laser safety","university",2,"high"),
 ("c3","chemical handling","university",2,"medium");
 
-insert into Requires values (1,"c1"),(1,"c2"),(2,"c1");
+insert into Requires values (1,"c1")
+                           ,(1,"c2")
+                           ,(2,"c1");
 
 insert into Holds values
 (1,"c1","2025-01-10","2028-01-10","A"),
@@ -92,7 +121,7 @@ insert into Holds values
 
 
 insert into Reservation values
-(1,"2026-11-01",date_add(now(), interval 3 day),date_add(now(), interval 4 day),"test the gravity box","Approved",7,"p1",1),
+(1, '2026-11-01', '2026-11-13 09:00:00', '2026-11-13 12:00:00', 'test the gravity box', 'Approved', 7, 'p1', 1),
 (2,"2026-11-02","2026-11-20","2026-11-22","check plant sensors","Pending",8,"p3",null),
 (3,"2026-11-02","2026-11-25","2026-11-26","water tank test","Pending",3,"p2",null),
 (4,"2026-09-28","2026-10-05","2026-10-06","measure the light","Rejected",3,"p2",null),
@@ -100,7 +129,13 @@ insert into Reservation values
 (6,"2026-09-25","2026-10-01","2026-10-03","temperature test","Completed",1,"p1",2);
 
 insert into Reserves values
-(1,"sn1"),(1,"sn3"),(2,"sn6"),(3,"sn5"),(4,"sn4"),(5,"sn1"),(6,"sn4");
+                         (1,"sn1"),
+                         (1,"sn3"),
+                         (2,"sn6"),
+                         (3,"sn5"),
+                         (4,"sn4"),
+                         (5,"sn1"),
+                         (6,"sn4");
 
 
 insert into Maintenance values
@@ -126,8 +161,11 @@ insert into Supplier values
 (4,"test supplier","test@mail.com","0500000004");
 
 insert into Supplies values
-(1,1,1,12.50),(2,1,1,11.00),(1,1,2,12.00),
-(1,2,1,4.00),(3,2,3,3.80),
+(1,1,1,12.50),
+(2,1,1,11.00),
+(1,1,2,12.00),
+(1,2,1,4.00),
+(3,2,3,3.80),
 (2,3,2,30.00),
 (3,4,3,6.00);
 
@@ -139,7 +177,10 @@ insert into Stocks values
 (3,2,12.00,"2026-09-30","shelf",6,"2026-02-01");
 
 insert into Consumes values
-(1,1,1,1.50),(1,1,2,2.00),(6,1,1,0.50),(6,1,2,3.00);
+(1,1,1,1.50),
+(1,1,2,2.00),
+(6,1,1,0.50),
+(6,1,2,3.00);
 
 -- part 2 : changes
 -- op 1
