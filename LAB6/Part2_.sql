@@ -121,7 +121,7 @@ insert into Holds values
 
 
 insert into Reservation values
-(1, '2026-11-01', '2026-11-13 09:00:00', '2026-11-13 12:00:00', 'test the gravity box', 'Approved', 7, 'p1', 1),
+(1,'2026-11-01',date_add(now(), interval 3 day),date_add(now(), interval 4 day),'test the gravity box','Approved',7,'p1',1),
 (2,"2026-11-02","2026-11-20","2026-11-22","check plant sensors","Pending",8,"p3",null),
 (3,"2026-11-02","2026-11-25","2026-11-26","water tank test","Pending",3,"p2",null),
 (4,"2026-09-28","2026-10-05","2026-10-06","measure the light","Rejected",3,"p2",null),
