@@ -18,3 +18,8 @@ sqlfiles/
 # Ignore un fichier précis dans le dossier LAB6
 **/LAB6/part1_lab.sql
 .gitignore 
+check_1.sql
+func_prcu_1.sql
+lab6-correction.sql
+lab7.sql
+triggers_1.sql
