@@ -1,0 +1,103 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------
+create function availableUnits(mId int)
+returns int
+reads sql data
+begin
+  declare n int;
+  select count(*) into n
+  from EquipmentUnit E
+  where E.modelId = mId and E.status = 'InService';
+  return n;
+end
+--------------
+
+ERROR 1304 (42000) at line 3: FUNCTION availableUnits already exists
+--------------
+select M.commercialName, availableUnits(M.modelId) as available_units
+from EquipmentModel M
+--------------
+
++----------------+-----------------+
+| commercialName | available_units |
++----------------+-----------------+
+| BX53           |               4 |
+| Fluke 1524     |               2 |
+| Prusa XL       |               1 |
+| Spectro X      |               0 |
++----------------+-----------------+
+4 rows in set (0.00 sec)
+
+--------------
+create procedure RestockLab(in p_labId int, in p_consId int,
+                            in p_qty decimal(12,2),
+                            out p_newQuantity decimal(12,2))
+begin
+  if p_qty <= 0 then
+    signal sqlstate '45000' set message_text = 'non-positive qty';
+  end if;
+  if not exists (select 1 from Stocks S
+                 where S.labId = p_labId and S.consId = p_consId) then
+    signal sqlstate '45000' set message_text = 'no stock for this laboratory and consumable';
+  end if;
+  update Stocks
+  set quantityOnHand = quantityOnHand + p_qty, lastRestockDate = curdate()
+  where labId = p_labId and consId = p_consId;
+
+  select quantityOnHand into p_newQuantity
+  from Stocks
+  where labId = p_labId and consId = p_consId;
+end
+--------------
+
+ERROR 1304 (42000) at line 21: PROCEDURE RestockLab already exists
+--------------
+select quantityOnHand, lastRestockDate from Stocks where labId = 1 and consId = 1
+--------------
+
++----------------+-----------------+
+| quantityOnHand | lastRestockDate |
++----------------+-----------------+
+|         118.00 | 2026-11-22      |
++----------------+-----------------+
+1 row in set (0.00 sec)
+
+--------------
+call RestockLab(1, 1, 10, @q)
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+select @q
+--------------
+
++--------+
+| @q     |
++--------+
+| 128.00 |
++--------+
+1 row in set (0.00 sec)
+
+--------------
+select quantityOnHand, lastRestockDate from Stocks where labId = 1 and consId = 1
+--------------
+
++----------------+-----------------+
+| quantityOnHand | lastRestockDate |
++----------------+-----------------+
+|         128.00 | 2026-11-22      |
++----------------+-----------------+
+1 row in set (0.00 sec)
+
+--------------
+call RestockLab(1, 1, -5, @q)
+--------------
+
+ERROR 1644 (45000) at line 49: non-positive qty
+--------------
+call RestockLab(30, 29, 2, @q)
+--------------
+
+ERROR 1644 (45000) at line 52: no stock for this laboratory and consumable
+Bye

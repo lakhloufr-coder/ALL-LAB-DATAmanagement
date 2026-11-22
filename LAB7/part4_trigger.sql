@@ -1,6 +1,4 @@
--- PART 4 : Triggers
-
--- 1 participation 
+-- 1.
 delimiter //
 create trigger participates_insert
 before insert on Participates
@@ -33,17 +31,7 @@ begin
 end //
 delimiter ;
 
--- valid
-insert into Participates values (4,'P2','Co-PI');
-update Participates set role='PI' where pid=2 and projectCode='P1';
--- rejected
-insert into Participates values (5,'P1','Collaborator');
-insert into Participates values (6,'P2','Co-PI');
-insert into Participates values (4,'P1','PI');
-update Participates set role='Co-PI' where pid=2 and projectCode='P1';
-
-
--- 2 double booking 
+-- 2.
 delimiter //
 create trigger reserves_insert
 before insert on Reserves
@@ -73,18 +61,7 @@ begin
 end //
 delimiter ;
 
--- valid
-insert into Reservation values (20,'2026-11-22 10:00:00','2027-01-10 09:00:00','2027-01-11 18:00:00','Test','Approved',2,'P1',3);
-insert into Reserves values (20,'U1');
--- rejected
-insert into Reservation values (21,'2026-11-22 10:00:00','2026-10-31 09:00:00','2026-11-01 18:00:00','Test','Approved',2,'P1',3);
-insert into Reserves values (21,'U1');
-insert into Reservation values (22,'2026-11-22 10:00:00','2026-10-31 09:00:00','2026-11-01 18:00:00','Test','Pending',2,'P1',NULL);
-insert into Reserves values (22,'U1');
-update Reservation set status='Approved', approverPid=3 where resId=22;
-
-
--- 3 certifications 
+-- 3.
 delimiter //
 create trigger reserves_certification
 before insert on Reserves
@@ -101,16 +78,7 @@ begin
 end //
 delimiter ;
 
--- valid
-insert into Reservation values (23,'2026-11-22 10:00:00','2026-12-10 09:00:00','2026-12-11 18:00:00','Test','Pending',2,'P1',NULL);
-insert into Reserves values (23,'U3');
-insert into Reserves values (23,'U7');
--- rejected
-insert into Reservation values (24,'2026-11-22 10:00:00','2026-12-10 09:00:00','2026-12-11 18:00:00','Test','Pending',8,'P1',NULL);
-insert into Reserves values (24,'U4');
-
-
--- 4 stock 
+-- 4.
 delimiter //
 create trigger consumes_before
 before insert on Consumes
@@ -136,17 +104,7 @@ begin
 end //
 delimiter ;
 
--- valid
-select quantityOnHand from Stocks where labId=1 and consId=1;
-insert into Consumes values (2,1,1,5.00);
-select quantityOnHand from Stocks where labId=1 and consId=1;
--- rejected
-insert into Consumes values (3,1,1,0);
-insert into Consumes values (3,3,2,1);
-insert into Consumes values (3,2,1,100);
-
-
--- 5 maintenance (AFTER INSERT / AFTER UPDATE sur Maintenance)
+-- 5.
 delimiter //
 create trigger maintenance_insert
 after insert on Maintenance
@@ -165,16 +123,7 @@ begin
 end //
 delimiter ;
 
--- valid
-insert into Maintenance values ('U2','2026-11-20 09:00:00','2026-11-20 12:00:00','Preventive','Test',100.00,'FollowUpRequired',6);
-select serialNo, status from EquipmentUnit where serialNo = 'U2';
-update Maintenance set outcome='Resolved' where serialNo='U2' and startTS='2026-11-20 09:00:00';
-select serialNo, status from EquipmentUnit where serialNo = 'U2';
--- rule: only the unit of the record changes
-select serialNo, status from EquipmentUnit where serialNo = 'U7';
-
-
--- 6 personnes 
+-- 6.
 delimiter //
 create trigger student_insert
 before insert on Student
@@ -202,8 +151,9 @@ for each row
 begin
   if new.position = 'dean' and new.supervisorPid is not null then
     signal sqlstate '45000' set message_text = 'the dean has no supervisor';
-  elseif (new.pid in (select pid from Faculty) or new.pid in (select pid from Administrative))
-     and new.supervisorPid not in (select pid from Employee where position = 'dean') then
+  elseif new.position <> 'dean'
+     and (new.pid in (select pid from Faculty) or new.pid in (select pid from Administrative))
+     and coalesce(new.supervisorPid, -1) not in (select pid from Employee where position = 'dean') then
     signal sqlstate '45000' set message_text = 'must report to the dean';
   end if;
 end //
@@ -212,8 +162,9 @@ create trigger faculty_insert
 before insert on Faculty
 for each row
 begin
-  if (select supervisorPid from Employee where pid = new.pid)
-     not in (select pid from Employee where position = 'dean') then
+  if exists (select 1 from Employee e
+             where e.pid = new.pid and e.position <> 'dean'
+               and coalesce(e.supervisorPid, -1) not in (select pid from Employee where position = 'dean')) then
     signal sqlstate '45000' set message_text = 'faculty must report to the dean';
   end if;
 end //
@@ -222,26 +173,81 @@ create trigger administrative_insert
 before insert on Administrative
 for each row
 begin
-  if (select supervisorPid from Employee where pid = new.pid)
-     not in (select pid from Employee where position = 'dean') then
+  if exists (select 1 from Employee e
+             where e.pid = new.pid and e.position <> 'dean'
+               and coalesce(e.supervisorPid, -1) not in (select pid from Employee where position = 'dean')) then
     signal sqlstate '45000' set message_text = 'administrative must report to the dean';
   end if;
 end //
 delimiter ;
 
--- valid
+
+-- Valid statements
+
+-- 1. valid
+insert into Participates values (4,'P2','Co-PI');
+update Participates set role='PI' where pid=2 and projectCode='P1';
+
+-- 2. valid
+insert into Reservation values (20,'2026-11-22 10:00:00','2027-01-10 09:00:00','2027-01-11 18:00:00','Test','Approved',2,'P1',3);
+insert into Reserves values (20,'U1');
+insert into Reservation values (21,'2026-11-22 10:00:00','2026-10-31 09:00:00','2026-11-01 18:00:00','Test','Approved',2,'P1',3);
+insert into Reservation values (22,'2026-11-22 10:00:00','2026-10-31 09:00:00','2026-11-01 18:00:00','Test','Pending',2,'P1',NULL);
+insert into Reserves values (22,'U1');
+
+-- 3. valid
+insert into Reservation values (23,'2026-11-22 10:00:00','2026-12-10 09:00:00','2026-12-11 18:00:00','Test','Pending',2,'P1',NULL);
+insert into Reserves values (23,'U3');
+insert into Reserves values (23,'U7');
+insert into Reservation values (24,'2026-11-22 10:00:00','2026-12-10 09:00:00','2026-12-11 18:00:00','Test','Pending',8,'P1',NULL);
+
+-- 4. valid
+select quantityOnHand from Stocks where labId=1 and consId=1;
+insert into Consumes values (2,1,1,5.00);
+select quantityOnHand from Stocks where labId=1 and consId=1;
+
+-- 5. valid
+insert into Maintenance values ('U2','2026-11-20 09:00:00','2026-11-20 12:00:00','Preventive','Test',100.00,'FollowUpRequired',6);
+select serialNo, status from EquipmentUnit where serialNo = 'U2';
+update Maintenance set outcome='Resolved' where serialNo='U2' and startTS='2026-11-20 09:00:00';
+select serialNo, status from EquipmentUnit where serialNo = 'U2';
+select serialNo, status from EquipmentUnit where serialNo = 'U7';
+
+-- 6. valid
 insert into Person values (30,'Test','Student','t.student@um6p.ma','UM6P','2026-11-01',NULL);
 insert into Student values (30,'BSc');
 insert into Person values (31,'Test','Faculty','t.faculty@um6p.ma','UM6P','2026-11-01',NULL);
 insert into Employee values (31,'0631','D-1','faculty',1);
 insert into Academic values (31);
 insert into Faculty values (31);
--- rejected
-insert into Student values (2,'PhD');
-insert into Employee values (8,'0608','X-1','postdoc',2);
 insert into Person values (32,'Test','Fac2','t.fac2@um6p.ma','UM6P','2026-11-01',NULL);
 insert into Employee values (32,'0632','D-2','faculty',2);
 insert into Academic values (32);
+
+
+-- Rejected statements (each one must fail with error 1644 and the trigger message)
+
+-- 1. rejected
+insert into Participates values (5,'P1','Collaborator');
+insert into Participates values (6,'P2','Co-PI');
+insert into Participates values (4,'P1','PI');
+update Participates set role='Co-PI' where pid=2 and projectCode='P1';
+
+-- 2. rejected
+insert into Reserves values (21,'U1');
+update Reservation set status='Approved', approverPid=3 where resId=22;
+
+-- 3. rejected
+insert into Reserves values (24,'U4');
+
+-- 4. rejected
+insert into Consumes values (3,1,1,0);
+insert into Consumes values (3,3,2,1);
+insert into Consumes values (3,2,1,100);
+
+-- 6. rejected
+insert into Student values (2,'PhD');
+insert into Employee values (8,'0608','X-1','postdoc',2);
 insert into Faculty values (32);
 update Employee set supervisorPid=3 where pid=2;
 update Employee set supervisorPid=2 where pid=1;

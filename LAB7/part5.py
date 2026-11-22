@@ -42,6 +42,7 @@ def insertreserveshandle(con, resid, serialNo):
     finally:
         cursor.close()
 
+con = None
 try:
     con = mysql.connector.connect(host="localhost", user="root",
                                   password="redareda", database="rlms_lab6")
@@ -49,6 +50,8 @@ try:
     stocklevel(con)
     restocklab(con, 1, 1, 9)
     insertreserveshandle(con, 24, "U4")
-    con.close()
 except Error as er:
-    print("connection error:", er.msg)
+    print("database error:", er.msg)
+finally:
+    if con is not None and con.is_connected():
+        con.close()

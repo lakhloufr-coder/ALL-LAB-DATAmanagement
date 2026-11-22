@@ -1,0 +1,7 @@
+U1 BX53
+U2 BX53
+U3 Fluke 1524
+U7 BX53
+(2, 'Data Systems Lab', 1, 'Nitrile Gloves', 'box', Decimal('8.00'), Decimal('10.00'), 6, datetime.date(2026, 2, 1), 'LOW')
+new quantity: 137.00
+database error: missing or expired certification

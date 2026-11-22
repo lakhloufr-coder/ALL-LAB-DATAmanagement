@@ -1,0 +1,138 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------
+SELECT CONCAT(P1.firstName, ' ', P1.lastName) AS employee_name,
+       CONCAT(P2.firstName, ' ', P2.lastName) AS supervisor_name
+FROM Employee E
+JOIN Person P1 ON E.pid = P1.pid
+LEFT OUTER JOIN Employee R ON E.supervisorPid = R.pid
+LEFT OUTER JOIN Person P2 ON R.pid = P2.pid
+--------------
+
++-----------------+-----------------+
+| employee_name   | supervisor_name |
++-----------------+-----------------+
+| Omar Alaoui     | NULL            |
+| Karim Bennani   | Omar Alaoui     |
+| Salma Idrissi   | Omar Alaoui     |
+| Amal Chraibi    | Omar Alaoui     |
+| Test Faculty    | Omar Alaoui     |
+| Nadia Tazi      | Karim Bennani   |
+| Youssef Berrada | Karim Bennani   |
+| Test Fac2       | Karim Bennani   |
+| Hind Senhaji    | Salma Idrissi   |
++-----------------+-----------------+
+9 rows in set (0.03 sec)
+
+--------------
+SELECT R.resId, CONCAT(A.firstName, ' ', A.lastName) AS approver_name
+FROM Reservation R
+LEFT OUTER JOIN Person A ON R.approverPid = A.pid
+--------------
+
++-------+---------------+
+| resId | approver_name |
++-------+---------------+
+|     3 | NULL          |
+|     6 | NULL          |
+|     7 | NULL          |
+|    22 | NULL          |
+|    23 | NULL          |
+|    24 | NULL          |
+|     1 | Salma Idrissi |
+|     2 | Salma Idrissi |
+|     4 | Salma Idrissi |
+|     5 | Salma Idrissi |
+|    20 | Salma Idrissi |
+|    21 | Salma Idrissi |
++-------+---------------+
+12 rows in set (0.00 sec)
+
+--------------
+SELECT A.serialNo AS unit_1, B.serialNo AS unit_2, A.modelId
+FROM EquipmentUnit A
+JOIN EquipmentUnit B ON A.modelId = B.modelId AND A.labId < B.labId
+--------------
+
++--------+--------+---------+
+| unit_1 | unit_2 | modelId |
++--------+--------+---------+
+| U1     | U6     |       1 |
+| U1     | U8     |       1 |
+| U2     | U6     |       1 |
+| U2     | U8     |       1 |
+| U3     | U4     |       2 |
+| U7     | U6     |       1 |
+| U7     | U8     |       1 |
++--------+--------+---------+
+7 rows in set (0.01 sec)
+
+--------------
+SELECT M.modelId, M.commercialName, COUNT(E.serialNo) AS nb_units
+FROM EquipmentModel M
+LEFT OUTER JOIN EquipmentUnit E ON M.modelId = E.modelId
+GROUP BY M.modelId, M.commercialName
+--------------
+
++---------+----------------+----------+
+| modelId | commercialName | nb_units |
++---------+----------------+----------+
+|       1 | BX53           |        5 |
+|       2 | Fluke 1524     |        2 |
+|       3 | Prusa XL       |        1 |
+|       4 | Spectro X      |        0 |
++---------+----------------+----------+
+4 rows in set (0.00 sec)
+
+--------------
+SELECT E.labId, E.serialNo
+FROM EquipmentUnit E
+WHERE E.purchaseCost >= ALL (SELECT E2.purchaseCost
+                             FROM EquipmentUnit E2
+                             WHERE E2.labId = E.labId)
+ORDER BY E.labId
+--------------
+
++-------+----------+
+| labId | serialNo |
++-------+----------+
+|     1 | U3       |
+|     2 | U4       |
+|     3 | U5       |
++-------+----------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT L.labId, L.name, SUM(S.quantityOnHand) AS total_quantity
+FROM Laboratory L
+JOIN Stocks S ON L.labId = S.labId
+GROUP BY L.labId, L.name
+HAVING SUM(S.quantityOnHand) > (SELECT SUM(quantityOnHand) FROM Stocks)
+                              / (SELECT COUNT(*) FROM Laboratory)
+--------------
+
++-------+--------------------+----------------+
+| labId | name               | total_quantity |
++-------+--------------------+----------------+
+|     1 | Physics Laboratory |         130.00 |
++-------+--------------------+----------------+
+1 row in set (0.01 sec)
+
+--------------
+SELECT C.consId, C.name
+FROM Consumable C
+WHERE NOT EXISTS (SELECT L.labId
+                  FROM Laboratory L
+                  WHERE NOT EXISTS (SELECT 1
+                                    FROM Stocks S
+                                    WHERE S.labId = L.labId
+                                      AND S.consId = C.consId))
+--------------
+
++--------+----------------+
+| consId | name           |
++--------+----------------+
+|      1 | Nitrile Gloves |
++--------+----------------+
+1 row in set (0.01 sec)
+
+Bye

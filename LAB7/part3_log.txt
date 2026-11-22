@@ -1,0 +1,274 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------
+ALTER TABLE Student ADD CONSTRAINT check_program_stu
+  CHECK (program IN ('BSc','BEng','MSc','PhD'))
+--------------
+
+ERROR 3822 (HY000) at line 2: Duplicate check constraint name 'check_program_stu'.
+--------------
+ALTER TABLE Employee ADD CONSTRAINT check_position
+  CHECK (position IN ('dean','faculty','scientist','postdoc','secretary',
+                      'accountant','technician','engineer','lab manager'))
+--------------
+
+ERROR 3822 (HY000) at line 6: Duplicate check constraint name 'check_position'.
+--------------
+ALTER TABLE ResearchProject ADD CONSTRAINT check_status_project
+  CHECK (status IN ('Proposed','Active','Suspended','Completed','Cancelled'))
+--------------
+
+ERROR 3822 (HY000) at line 11: Duplicate check constraint name 'check_status_project'.
+--------------
+ALTER TABLE Participates ADD CONSTRAINT check_role
+  CHECK (role IN ('PI','Co-PI','Collaborator'))
+--------------
+
+ERROR 3822 (HY000) at line 15: Duplicate check constraint name 'check_role'.
+--------------
+ALTER TABLE EquipmentUnit ADD CONSTRAINT check_status_unit
+  CHECK (status IN ('InService','UnderMaintenance','OutOfService','Retired'))
+--------------
+
+ERROR 3822 (HY000) at line 19: Duplicate check constraint name 'check_status_unit'.
+--------------
+ALTER TABLE Reservation ADD CONSTRAINT check_status_reservation
+  CHECK (status IN ('Pending','Approved','Rejected','Cancelled','Completed'))
+--------------
+
+ERROR 3822 (HY000) at line 23: Duplicate check constraint name 'check_status_reservation'.
+--------------
+ALTER TABLE Maintenance ADD CONSTRAINT check_type_maint
+  CHECK (type IN ('Preventive','Corrective'))
+--------------
+
+ERROR 3822 (HY000) at line 27: Duplicate check constraint name 'check_type_maint'.
+--------------
+ALTER TABLE Maintenance ADD CONSTRAINT check_outcome_maint
+  CHECK (outcome IN ('Resolved','FollowUpRequired'))
+--------------
+
+ERROR 3822 (HY000) at line 31: Duplicate check constraint name 'check_outcome_maint'.
+--------------
+ALTER TABLE CalibrationRecord ADD CONSTRAINT check_result
+  CHECK (result IN ('Pass','Fail','Adjusted'))
+--------------
+
+ERROR 3822 (HY000) at line 35: Duplicate check constraint name 'check_result'.
+--------------
+ALTER TABLE Budget ADD CONSTRAINT check_budget_amounts
+  CHECK (amountGranted >= 0 AND amountDisbursed >= 0
+         AND amountDisbursed <= amountGranted)
+--------------
+
+ERROR 3822 (HY000) at line 39: Duplicate check constraint name 'check_budget_amounts'.
+--------------
+ALTER TABLE EquipmentUnit ADD CONSTRAINT check_price_unit
+  CHECK (purchaseCost >= 0)
+--------------
+
+ERROR 3822 (HY000) at line 44: Duplicate check constraint name 'check_price_unit'.
+--------------
+ALTER TABLE Certification ADD CONSTRAINT check_validity
+  CHECK (validityPeriod > 0)
+--------------
+
+ERROR 3822 (HY000) at line 48: Duplicate check constraint name 'check_validity'.
+--------------
+ALTER TABLE Maintenance ADD CONSTRAINT check_cost_main
+  CHECK (cost >= 0)
+--------------
+
+ERROR 3822 (HY000) at line 52: Duplicate check constraint name 'check_cost_main'.
+--------------
+ALTER TABLE Consumable ADD CONSTRAINT check_reorder
+  CHECK (reorderThreshold >= 0)
+--------------
+
+ERROR 3822 (HY000) at line 56: Duplicate check constraint name 'check_reorder'.
+--------------
+ALTER TABLE Supplies ADD CONSTRAINT check_unit_price
+  CHECK (unitPrice >= 0)
+--------------
+
+ERROR 3822 (HY000) at line 60: Duplicate check constraint name 'check_unit_price'.
+--------------
+ALTER TABLE Stocks ADD CONSTRAINT check_quantity_hand
+  CHECK (quantityOnHand >= 0)
+--------------
+
+ERROR 3822 (HY000) at line 64: Duplicate check constraint name 'check_quantity_hand'.
+--------------
+ALTER TABLE Consumes ADD CONSTRAINT check_quantity_used
+  CHECK (quantityUsed > 0)
+--------------
+
+ERROR 3822 (HY000) at line 68: Duplicate check constraint name 'check_quantity_used'.
+--------------
+ALTER TABLE Person ADD CONSTRAINT check_date
+  CHECK (endDate IS NULL OR endDate >= startDate)
+--------------
+
+ERROR 3822 (HY000) at line 72: Duplicate check constraint name 'check_date'.
+--------------
+ALTER TABLE ResearchProject ADD CONSTRAINT check_project_dates
+  CHECK (endDate >= startDate)
+--------------
+
+ERROR 3822 (HY000) at line 76: Duplicate check constraint name 'check_project_dates'.
+--------------
+ALTER TABLE Budget ADD CONSTRAINT check_budget_dates
+  CHECK (endDate >= startDate)
+--------------
+
+ERROR 3822 (HY000) at line 80: Duplicate check constraint name 'check_budget_dates'.
+--------------
+ALTER TABLE Holds ADD CONSTRAINT check_time
+  CHECK (expirationDate > issueDate)
+--------------
+
+ERROR 3822 (HY000) at line 84: Duplicate check constraint name 'check_time'.
+--------------
+ALTER TABLE Reservation ADD CONSTRAINT check_time_sanity_res
+  CHECK (plannedEnd > plannedStart)
+--------------
+
+ERROR 3822 (HY000) at line 88: Duplicate check constraint name 'check_time_sanity_res'.
+--------------
+ALTER TABLE Maintenance ADD CONSTRAINT check_time_sanity_main
+  CHECK (endTS >= startTS)
+--------------
+
+ERROR 3822 (HY000) at line 92: Duplicate check constraint name 'check_time_sanity_main'.
+--------------
+ALTER TABLE CalibrationRecord ADD CONSTRAINT calibration_date
+  CHECK (nextDueDate > calibDate)
+--------------
+
+ERROR 3822 (HY000) at line 96: Duplicate check constraint name 'calibration_date'.
+--------------
+UPDATE Student SET program = 'Master' WHERE pid = 8
+--------------
+
+ERROR 3819 (HY000) at line 103: Check constraint 'check_program_stu' is violated.
+--------------
+UPDATE Employee SET position = 'cook' WHERE pid = 7
+--------------
+
+ERROR 3819 (HY000) at line 106: Check constraint 'check_position' is violated.
+--------------
+UPDATE ResearchProject SET status = 'Unknown' WHERE code = 'P1'
+--------------
+
+ERROR 3819 (HY000) at line 109: Check constraint 'check_status_project' is violated.
+--------------
+UPDATE Participates SET role = 'Boss' WHERE pid = 2 AND projectCode = 'P1'
+--------------
+
+ERROR 3819 (HY000) at line 112: Check constraint 'check_role' is violated.
+--------------
+UPDATE EquipmentUnit SET status = 'Broken' WHERE serialNo = 'U1'
+--------------
+
+ERROR 3819 (HY000) at line 115: Check constraint 'check_status_unit' is violated.
+--------------
+UPDATE Reservation SET status = 'Done' WHERE resId = 1
+--------------
+
+ERROR 3819 (HY000) at line 118: Check constraint 'check_status_reservation' is violated.
+--------------
+UPDATE Maintenance SET type = 'Random' WHERE serialNo = 'U6'
+--------------
+
+ERROR 3819 (HY000) at line 121: Check constraint 'check_type_maint' is violated.
+--------------
+UPDATE Maintenance SET outcome = 'Maybe' WHERE serialNo = 'U6'
+--------------
+
+ERROR 3819 (HY000) at line 124: Check constraint 'check_outcome_maint' is violated.
+--------------
+UPDATE CalibrationRecord SET result = 'Excellent' WHERE serialNo = 'U5'
+--------------
+
+ERROR 3819 (HY000) at line 127: Check constraint 'check_result' is violated.
+--------------
+UPDATE Budget SET amountGranted = -1 WHERE budgetLine = 'B1'
+--------------
+
+ERROR 3819 (HY000) at line 130: Check constraint 'check_budget_amounts' is violated.
+--------------
+UPDATE Budget SET amountDisbursed = amountGranted + 1 WHERE budgetLine = 'B1'
+--------------
+
+ERROR 3819 (HY000) at line 132: Check constraint 'check_budget_amounts' is violated.
+--------------
+UPDATE EquipmentUnit SET purchaseCost = -5 WHERE serialNo = 'U1'
+--------------
+
+ERROR 3819 (HY000) at line 135: Check constraint 'check_price_unit' is violated.
+--------------
+UPDATE Certification SET validityPeriod = 0 WHERE code = 'C1'
+--------------
+
+ERROR 3819 (HY000) at line 138: Check constraint 'check_validity' is violated.
+--------------
+UPDATE Maintenance SET cost = -1 WHERE serialNo = 'U6'
+--------------
+
+ERROR 3819 (HY000) at line 141: Check constraint 'check_cost_main' is violated.
+--------------
+UPDATE Consumable SET reorderThreshold = -1 WHERE consId = 1
+--------------
+
+ERROR 3819 (HY000) at line 144: Check constraint 'check_reorder' is violated.
+--------------
+UPDATE Supplies SET unitPrice = -1 WHERE suppId = 1 AND consId = 1 AND labId = 1
+--------------
+
+ERROR 3819 (HY000) at line 147: Check constraint 'check_unit_price' is violated.
+--------------
+UPDATE Stocks SET quantityOnHand = -1 WHERE labId = 1 AND consId = 1
+--------------
+
+ERROR 3819 (HY000) at line 150: Check constraint 'check_quantity_hand' is violated.
+--------------
+UPDATE Consumes SET quantityUsed = 0 WHERE resId = 1 AND labId = 1 AND consId = 1
+--------------
+
+ERROR 3819 (HY000) at line 153: Check constraint 'check_quantity_used' is violated.
+--------------
+INSERT INTO Person
+VALUES (12,'karim','hayssoufi','karim.hayssoufi@um6p.ma','SHBM','2027-05-29','2026-05-29')
+--------------
+
+ERROR 3819 (HY000) at line 156: Check constraint 'check_date' is violated.
+--------------
+UPDATE ResearchProject SET endDate = '2000-01-01' WHERE code = 'P1'
+--------------
+
+ERROR 3819 (HY000) at line 160: Check constraint 'check_project_dates' is violated.
+--------------
+UPDATE Budget SET endDate = '2000-01-01' WHERE budgetLine = 'B1'
+--------------
+
+ERROR 3819 (HY000) at line 163: Check constraint 'check_budget_dates' is violated.
+--------------
+UPDATE Holds SET expirationDate = '2020-01-01' WHERE pid = 2 AND certCode = 'C1'
+--------------
+
+ERROR 3819 (HY000) at line 166: Check constraint 'check_time' is violated.
+--------------
+UPDATE Reservation SET plannedEnd = plannedStart WHERE resId = 1
+--------------
+
+ERROR 3819 (HY000) at line 169: Check constraint 'check_time_sanity_res' is violated.
+--------------
+UPDATE Maintenance SET endTS = startTS - INTERVAL 1 HOUR WHERE serialNo = 'U6'
+--------------
+
+ERROR 3819 (HY000) at line 172: Check constraint 'check_time_sanity_main' is violated.
+--------------
+UPDATE CalibrationRecord SET nextDueDate = '2020-01-01' WHERE serialNo = 'U5'
+--------------
+
+ERROR 3819 (HY000) at line 175: Check constraint 'calibration_date' is violated.
+Bye

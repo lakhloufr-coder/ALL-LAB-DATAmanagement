@@ -1,0 +1,154 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+--------------
+CREATE OR REPLACE VIEW UpcomingApprovedReservationsByLab AS
+SELECT L.labId AS labId,
+       L.name AS labName,
+       DATE(R.plannedStart) AS reservationDate,
+       COUNT(DISTINCT Rs.resId) AS approvedReservations
+FROM Reserves Rs
+JOIN Reservation R ON R.resId = Rs.resId
+JOIN EquipmentUnit E ON E.serialNo = Rs.serialNo
+JOIN Laboratory L ON L.labId = E.labId
+WHERE R.status = 'Approved'
+  AND R.plannedStart >= NOW()
+  AND R.plannedStart < NOW() + INTERVAL 14 DAY
+GROUP BY L.labId, L.name, DATE(R.plannedStart)
+--------------
+
+Query OK, 0 rows affected (0.07 sec)
+
+--------------
+SELECT * FROM UpcomingApprovedReservationsByLab
+--------------
+
+Empty set (0.01 sec)
+
+--------------
+CREATE OR REPLACE VIEW EquipmentInventoryByLab AS
+SELECT L.labId AS labId,
+       L.name AS labName,
+       M.modelId AS modelId,
+       M.commercialName AS commercialName,
+       M.category AS category,
+       COUNT(E.serialNo) AS totalUnits,
+       COUNT(IF(E.status = 'InService', E.serialNo, NULL)) AS inServiceUnits,
+       COUNT(IF(E.status = 'UnderMaintenance', E.serialNo, NULL)) AS underMaintenanceUnits
+FROM Laboratory L
+JOIN EquipmentUnit E ON L.labId = E.labId
+JOIN EquipmentModel M ON M.modelId = E.modelId
+GROUP BY L.labId, L.name, M.modelId, M.commercialName, M.category
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+SELECT * FROM EquipmentInventoryByLab WHERE labId = 1
+--------------
+
++-------+--------------------+---------+----------------+--------------------+------------+----------------+-----------------------+
+| labId | labName            | modelId | commercialName | category           | totalUnits | inServiceUnits | underMaintenanceUnits |
++-------+--------------------+---------+----------------+--------------------+------------+----------------+-----------------------+
+|     1 | Physics Laboratory |       1 | BX53           | Optical Microscope |          3 |              3 |                     0 |
+|     1 | Physics Laboratory |       2 | Fluke 1524     | Thermometer        |          1 |              1 |                     0 |
++-------+--------------------+---------+----------------+--------------------+------------+----------------+-----------------------+
+2 rows in set (0.00 sec)
+
+--------------
+CREATE OR REPLACE VIEW PersonReservationSummary AS
+SELECT P.pid AS pid,
+       P.firstName AS firstName,
+       P.lastName AS lastName,
+       COUNT(R.resId) AS totalReservations,
+       COUNT(IF(R.status = 'Approved', 1, NULL)) AS approvedReservations,
+       COUNT(IF(R.status = 'Pending', 1, NULL)) AS pendingReservations,
+       COUNT(IF(R.status = 'Cancelled', 1, NULL)) AS cancelledReservations
+FROM Person P
+LEFT OUTER JOIN Reservation R ON P.pid = R.madeByPid
+GROUP BY P.pid, P.firstName, P.lastName
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+SELECT * FROM PersonReservationSummary
+--------------
+
++-----+-----------+----------+-------------------+----------------------+---------------------+-----------------------+
+| pid | firstName | lastName | totalReservations | approvedReservations | pendingReservations | cancelledReservations |
++-----+-----------+----------+-------------------+----------------------+---------------------+-----------------------+
+|   1 | Omar      | Alaoui   |                 0 |                    0 |                   0 |                     0 |
+|   2 | Karim     | Bennani  |                 6 |                    4 |                   2 |                     0 |
+|   3 | Salma     | Idrissi  |                 0 |                    0 |                   0 |                     0 |
+|   4 | Nadia     | Tazi     |                 0 |                    0 |                   0 |                     0 |
+|   5 | Amal      | Chraibi  |                 0 |                    0 |                   0 |                     0 |
+|   6 | Youssef   | Berrada  |                 1 |                    0 |                   0 |                     0 |
+|   7 | Hind      | Senhaji  |                 0 |                    0 |                   0 |                     0 |
+|   8 | Mehdi     | Ouazzani |                 3 |                    1 |                   1 |                     0 |
+|   9 | Firdawse  | Zniber   |                 1 |                    0 |                   0 |                     1 |
+|  10 | Ali       | Rguibi   |                 0 |                    0 |                   0 |                     0 |
+|  11 | Zineb     | El Fassi |                 1 |                    0 |                   1 |                     0 |
+|  30 | Test      | Student  |                 0 |                    0 |                   0 |                     0 |
+|  31 | Test      | Faculty  |                 0 |                    0 |                   0 |                     0 |
+|  32 | Test      | Fac2     |                 0 |                    0 |                   0 |                     0 |
++-----+-----------+----------+-------------------+----------------------+---------------------+-----------------------+
+14 rows in set (0.00 sec)
+
+--------------
+CREATE OR REPLACE VIEW ProjectReservationSummary AS
+SELECT RP.code AS projectCode,
+       RP.title AS projectTitle,
+       RP.status AS projectStatus,
+       COUNT(R.resId) AS totalReservations,
+       COUNT(IF(R.status = 'Approved', 1, NULL)) AS approvedReservations,
+       MIN(IF(R.status = 'Approved' AND R.plannedStart >= NOW(), R.plannedStart, NULL)) AS nextApprovedReservation
+FROM ResearchProject RP
+LEFT OUTER JOIN Reservation R ON R.projectCode = RP.code
+GROUP BY RP.code, RP.title, RP.status
+--------------
+
+Query OK, 0 rows affected (0.02 sec)
+
+--------------
+SELECT * FROM ProjectReservationSummary
+--------------
+
++-------------+--------------------------+---------------+-------------------+----------------------+-------------------------+
+| projectCode | projectTitle             | projectStatus | totalReservations | approvedReservations | nextApprovedReservation |
++-------------+--------------------------+---------------+-------------------+----------------------+-------------------------+
+| P1          | Vector Search at Scale   | Active        |                11 |                    5 | 2027-01-10 09:00:00     |
+| P2          | Green HPC                | Proposed      |                 0 |                    0 | NULL                    |
+| P3          | Legacy Archive Migration | Cancelled     |                 1 |                    0 | NULL                    |
++-------------+--------------------------+---------------+-------------------+----------------------+-------------------------+
+3 rows in set, 3 warnings (0.00 sec)
+
+--------------
+CREATE OR REPLACE VIEW LaboratoryStockSummary AS
+SELECT L.labId AS labId,
+       L.name AS labName,
+       C.consId AS consId,
+       C.name AS consumableName,
+       C.unitOfMeasure AS unitOfMeasure,
+       S.quantityOnHand AS quantityOnHand,
+       C.reorderThreshold AS reorderThreshold,
+       S.technicalPid AS technicalPid,
+       S.monitoringSince AS monitoringSince,
+       IF(S.quantityOnHand <= C.reorderThreshold, 'LOW', 'OK') AS stockLevel
+FROM Stocks S
+JOIN Laboratory L ON S.labId = L.labId
+JOIN Consumable C ON C.consId = S.consId
+--------------
+
+Query OK, 0 rows affected (0.02 sec)
+
+--------------
+SELECT * FROM LaboratoryStockSummary WHERE labId = 2
+--------------
+
++-------+------------------+--------+----------------+---------------+----------------+------------------+--------------+-----------------+------------+
+| labId | labName          | consId | consumableName | unitOfMeasure | quantityOnHand | reorderThreshold | technicalPid | monitoringSince | stockLevel |
++-------+------------------+--------+----------------+---------------+----------------+------------------+--------------+-----------------+------------+
+|     2 | Data Systems Lab |      1 | Nitrile Gloves | box           |           8.00 |            10.00 |            6 | 2026-02-01      | LOW        |
++-------+------------------+--------+----------------+---------------+----------------+------------------+--------------+-----------------+------------+
+1 row in set (0.00 sec)
+
+Bye
