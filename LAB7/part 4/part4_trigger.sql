@@ -1,6 +1,6 @@
 -- PART 4 : Triggers
 
--- 1 participation (BEFORE INSERT / BEFORE UPDATE sur Participates)
+-- 1 participation 
 delimiter //
 create trigger participates_insert
 before insert on Participates
@@ -43,7 +43,7 @@ insert into Participates values (4,'P1','PI');
 update Participates set role='Co-PI' where pid=2 and projectCode='P1';
 
 
--- 2 double booking (BEFORE INSERT sur Reserves / BEFORE UPDATE sur Reservation)
+-- 2 double booking 
 delimiter //
 create trigger reserves_insert
 before insert on Reserves
@@ -84,7 +84,7 @@ insert into Reserves values (22,'U1');
 update Reservation set status='Approved', approverPid=3 where resId=22;
 
 
--- 3 certifications (BEFORE INSERT sur Reserves)
+-- 3 certifications 
 delimiter //
 create trigger reserves_certification
 before insert on Reserves
@@ -110,7 +110,7 @@ insert into Reservation values (24,'2026-11-22 10:00:00','2026-12-10 09:00:00','
 insert into Reserves values (24,'U4');
 
 
--- 4 stock (BEFORE INSERT et AFTER INSERT sur Consumes)
+-- 4 stock 
 delimiter //
 create trigger consumes_before
 before insert on Consumes
@@ -174,7 +174,7 @@ select serialNo, status from EquipmentUnit where serialNo = 'U2';
 select serialNo, status from EquipmentUnit where serialNo = 'U7';
 
 
--- 6 personnes (BEFORE INSERT / BEFORE UPDATE)
+-- 6 personnes 
 delimiter //
 create trigger student_insert
 before insert on Student
